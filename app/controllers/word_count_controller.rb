@@ -9,14 +9,14 @@ class WordCountController < ApplicationController
     # The special word the user input is in the string @special_word.
     # ================================================================================
 
-    @word_count = "Replace this string with your answer"
+    @word_count = @text.strip.split.count
 
-    @character_count_with_spaces = "Replace this string with your answer"
+    @character_count_with_spaces = @text.strip.length
 
-    @character_count_without_spaces = "Replace this string with your answer"
+    @character_count_without_spaces = @text.strip.gsub(/\s/,"").length
 
-    @occurrences = "Replace this string with your answer"
-
+    @occurrences = @text.gsub(/[^a-z0-9\s]/i, "").downcase.split.count(@special_word)
+      
     # ================================================================================
     # Your code goes above.
     # ================================================================================

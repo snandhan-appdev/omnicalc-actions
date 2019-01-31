@@ -10,8 +10,14 @@ class LoanPaymentController < ApplicationController
     # The number of years the user input is in the integer @years.
     # The principal value the user input is in the decimal @principal.
     # ================================================================================
-
-    @monthly_payment = "Replace this string with your answer"
+    
+    aprCalc = @apr / 100 / 12
+    periods = @years * 12
+    numer = aprCalc * @principal
+    denom = 1 - (1 + aprCalc)**(-1 * periods)
+    payment = numer / denom
+    payment = payment.round(2)
+    @monthly_payment = payment
 
     # ================================================================================
     # Your code goes above.
