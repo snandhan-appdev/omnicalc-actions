@@ -12,15 +12,26 @@ class MeteorologistController < ApplicationController
     #   characters removed, is in the string sanitized_street_address.
     # ==========================================================================
 
-    @current_temperature = "Replace this string with your answer"
+    url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + sanitized_street_address + "&key=AIzaSyBr-0XDfztIIUGyPRfa1D5KfPvURvAk2e4"
+    
+    parsed_data = JSON.parse(open(url).read)
 
-    @current_summary = "Replace this string with your answer"
+    @lat_now = parsed_data.dig("results", 0, "geometry", "location", "lat").to_s
 
-    @summary_of_next_sixty_minutes = "Replace this string with your answer"
+    @lng_now = parsed_data.dig("results", 0, "geometry", "location", "lng").to_s
+    
+    new_url = "https://api.darksky.net/forecast/f9cb6cc9b60c5cd7de1604db6461f3f9/" + @lat_now + "," + @lng_now
+    new_data = JSON.parse(open(new_url).read)
 
-    @summary_of_next_several_hours = "Replace this string with your answer"
+    @current_temperature = new_data.dig("currently","temperature")
 
-    @summary_of_next_several_days = "Replace this string with your answer"
+    @current_summary = new_data.dig("currently","summary")
+
+    @summary_of_next_sixty_minutes = new_data.dig("minutely","summary")
+
+    @summary_of_next_several_hours = new_data.dig("hourly","summary")
+
+    @summary_of_next_several_days = new_data.dig("daily","summary")
 
     render("meteorologist_templates/street_to_weather.html.erb")
   end
