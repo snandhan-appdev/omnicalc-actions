@@ -47,7 +47,7 @@ class StatsController < ApplicationController
     array = array.map{ |x| x - @mean }
     array = array.map{ |y| y**2}
     array_sum = array.sum
-    var = array_sum / (n-1)
+    var = array_sum / (n)
     
     @variance = var
     
