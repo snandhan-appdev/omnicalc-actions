@@ -7,31 +7,52 @@ class StatsController < ApplicationController
     # The numbers the user input are in the array @numbers.
     # ================================================================================
 
-    @sorted_numbers = "Replace this string with your answer"
+    @sorted_numbers = @numbers.sort
 
-    @count = "Replace this string with your answer"
+    @count = @numbers.count
 
-    @minimum = "Replace this string with your answer"
+    @minimum = @numbers.min
 
-    @maximum = "Replace this string with your answer"
+    @maximum = @numbers.max
 
-    @range = "Replace this string with your answer"
+    @range = (@numbers.max - @numbers.min)
 
     # Median
     # ======
 
-    @median = "Replace this string with your answer"
+   list = @sorted_numbers
+   count_n = list.count
+   item_number = 0
+   answer = 0
+   numba1 = @sorted_numbers.at(count_n / 2 - 1)
+   numba2 = @sorted_numbers.at(count_n / 2)
+   
+   if list.count % 2 == 1
+     item_number = @numbers.count / 2
+     answer = @sorted_numbers.at(item_number)
+   else
+     answer = (numba1 + numba2) / 2
+   end
+        
+    @median = answer
 
-    @sum = "Replace this string with your answer"
+    @sum = @numbers.sum
 
-    @mean = "Replace this string with your answer"
+    @mean = (@numbers.sum / @numbers.count)
 
     # Variance
     # ========
+    n = @numbers.count
+    array = @numbers
+    array = array.map{ |x| x - @mean }
+    array = array.map{ |y| y**2}
+    array_sum = array.sum
+    var = array_sum / (n-1)
+    
+    @variance = var
 
-    @variance = "Replace this string with your answer"
-
-    @standard_deviation = "Replace this string with your answer"
+  #  stdev = sqrt(var)
+    @standard_deviation = ""
 
     # Mode
     # ====
