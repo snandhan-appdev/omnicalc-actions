@@ -50,14 +50,25 @@ class StatsController < ApplicationController
     var = array_sum / (n-1)
     
     @variance = var
-
-  #  stdev = sqrt(var)
-    @standard_deviation = ""
+    
+    var = @variance.to_f
+    sdev = @variance**(0.5)
+    @standard_deviation = sdev
 
     # Mode
     # ====
+    
+    array = []
+    @numbers.each do |num|
+      index = @numbers.count(num)
+      array.push(index)
+    end
+  
+    max = array.max
+    final = array.index(max)
+    final = @numbers.at(final)
 
-    @mode = "Replace this string with your answer"
+    @mode = final
 
     # ================================================================================
     # Your code goes above.
